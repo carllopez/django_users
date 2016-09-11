@@ -1,0 +1,44 @@
+{% extends "users/base.html" %}
+{% load users_tags %}
+
+
+{% block extra_head %}
+	<style>
+	td {
+		text-align: left;
+	}
+	</style>
+{% endblock %}
+
+{% block content %}
+	<a href="{% url 'user-csv' %}" class="btn btn-info pull-right" role="button" style="margin-left:8px;">Export CSV</a>
+	<a href="{% url 'user-create' %}" class="btn btn-primary pull-right" role="button">Add user</a>
+	<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Birthday</th>
+        <th>Eligible</th>
+        <th>Random Number</th>
+        <th>BizzFuzz</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+	{% for user in object_list %}
+		<tr>
+			<td>{{ user.email }}</td>
+			<td>{{ user.birthday }}</td>
+			<td>{{ user.birthday|eligible }}</td>
+			<td>{{ user.rnd_number }}</td>
+			<td>{{ user.rnd_number|bizzfuzz }}</td>
+			<td><a href="{% url 'user-detail' pk=user.id %}">View</a></td>
+			<td><a href="{% url 'user-edit' pk=user.id %}">Edit</a></td>
+			<td><a href="{% url 'user-delete' pk=user.id %}">Delete</a></td>
+		</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+{% endblock %}
